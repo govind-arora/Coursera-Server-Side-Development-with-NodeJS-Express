@@ -2,6 +2,7 @@ const express = require("express");
 const http = require("http");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const dishRouter = require("./routes/dishRouter");
 
 const hostname = "localhost";
 const port = 3000;
@@ -10,34 +11,9 @@ const app = express();
 app.use(morgan("dev"));
 app.use(bodyParser.json());
 
-app.all("/dishes", (req, res, next) => {
-  res.statusCode = 200;
-  res.setHeader("Content-Type", "text/plain");
-  next();
-});
+app.use("/dishes", dishRouter);
 
-app.get("/dishes", (req, res, next) => {
-  res.end("Will return dishes to you soon!");
-});
-
-app.post("/dishes", (req, res, next) => {
-  res.end(
-    "Will add the dish: " +
-      req.body.name +
-      "with details" +
-      req.body.description
-  );
-});
-
-app.put("/dishes", (req, res, next) => {
-  res.statusCode = 403;
-  res.end("Put not supported");
-});
-
-app.delete("/dishes", (req, res, next) => {
-  res.end("Deleting all the dishes");
-});
-
+/*
 app.get("/dishes/:dishId", (req, res, next) => {
   res.end("Will return details of dish: " + req.params.dishId);
 });
@@ -60,6 +36,7 @@ app.put("/dishes/:dishId", (req, res, next) => {
 app.delete("/dishes/:dishId", (req, res, next) => {
   res.end("Deleting the dish: " + req.params.dishId);
 });
+*/
 
 app.use(express.static(__dirname + "/public"));
 
